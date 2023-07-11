@@ -2,6 +2,7 @@
 ./metier/Region.java
 
 ./vue/FrameJeu.java
-./vue/PanelJeu.java
+./vue/PanelGrille.java
+./vue/PanelNumeros.java
 
 ./Controleur.java

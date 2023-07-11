@@ -12,13 +12,13 @@ import java.awt.Font;
 
 import sudoku.Controleur;
 
-public class PanelJeu extends JPanel
+public class PanelGrille extends JPanel
 {
 	private Controleur ctrl;
 	private Integer    colCaseSelect;
 	private Integer    ligCaseSelect;
 
-	public PanelJeu(Controleur ctrl)
+	public PanelGrille(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 
@@ -38,7 +38,7 @@ public class PanelJeu extends JPanel
 		g.setColor(Color.lightGray);
 
 		if (colCaseSelect != null)
-			g.fillRect(50 + colCaseSelect * 50, 50 + ligCaseSelect * 50, 50, 50);
+			g.fillRect(50 + this.colCaseSelect * 50, 50 + this.ligCaseSelect * 50, 50, 50);
 
 		// Traits fins
 		g.setColor(new Color(135, 172, 255));
@@ -80,6 +80,16 @@ public class PanelJeu extends JPanel
 		}
 	}
 
+	public int[] getCoordSelect()
+	{
+		int[] tabRet = new int[2];
+
+		tabRet[0] = this.colCaseSelect;
+		tabRet[1] = this.ligCaseSelect;
+
+		return tabRet;
+	}
+
 	public class GereSouris extends MouseAdapter
 	{
 		private static final int TAILLE = 9;
@@ -103,15 +113,20 @@ public class PanelJeu extends JPanel
 			int posX = e.getX();
 			int posY = e.getY();
 
-			Integer[] posCase = this.getColCase(posX, posY);
+			Integer[] posCase = this.getCoordCase(posX, posY);
 
-			if (posCase != null)
+			if (posCase != null && PanelGrille.this.ctrl.getCase((posX-50)/50, (posY-50)/50) <= 0)
 			{
-				PanelJeu.this.colCaseSelect = posCase[0];
-				PanelJeu.this.ligCaseSelect = posCase[1];
+				PanelGrille.this.colCaseSelect = posCase[0];
+				PanelGrille.this.ligCaseSelect = posCase[1];
+			}
+			else
+			{
+				PanelGrille.this.colCaseSelect = null;
+				PanelGrille.this.ligCaseSelect = null;
 			}
 			
-			PanelJeu.this.repaint();
+			PanelGrille.this.repaint();
 		}
 
 		public void mouseMoved(MouseEvent e)
@@ -119,18 +134,18 @@ public class PanelJeu extends JPanel
 			int posX = e.getX();
 			int posY = e.getY();
 
-			Integer[] posCase = this.getColCase(posX, posY);
+			Integer[] posCase = this.getCoordCase(posX, posY);
 
-			if (posCase != null && PanelJeu.this.ctrl.getCase(posCase[0], posCase[1]) <= 0)
-				PanelJeu.this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			if (posCase != null && PanelGrille.this.ctrl.getCase((posX-50)/50, (posY-50)/50) <= 0)
+				PanelGrille.this.setCursor(new Cursor(Cursor.HAND_CURSOR   ));
 			else
-				PanelJeu.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				PanelGrille.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			
 
-			PanelJeu.this.repaint();
+			PanelGrille.this.repaint();
 		}
 
-		public Integer[] getColCase(int x, int y)
+		public Integer[] getCoordCase(int x, int y)
 		{
 			Integer[] posCase = new Integer[2];
 			for (int i = 0 ; i < GereSouris.TAILLE ; i++)

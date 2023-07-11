@@ -19,6 +19,15 @@ public class Controleur
 		return this.metier.getCase(y, x);
 	}
 
+	public void ecrireNumero(int numero)
+	{
+		int coords[] = this.vue.getCoordSelect();
+
+		this.metier.placer(numero, coords[1], coords[0]);
+
+		this.vue.maj();
+	}
+
 	public static void main(String[] a)
 	{
 		new Controleur();
