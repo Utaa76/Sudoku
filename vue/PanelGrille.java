@@ -1,28 +1,54 @@
 package sudoku.vue;
 
 import javax.swing.JPanel;
+import javax.swing.JButton;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.*;
 
 import sudoku.Controleur;
 
-public class PanelGrille extends JPanel
+public class PanelGrille extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
 	private Integer    colCaseSelect;
 	private Integer    ligCaseSelect;
 
+	private JButton    btnReinitialiser;
+	private JButton    btnSauvegarder  ;
+	private JButton    btnVerifier     ;
+
 	public PanelGrille(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 
+		this.setLayout(new BorderLayout());
+
 		GereSouris gs = new GereSouris();
+
+		this.btnReinitialiser = new JButton("Réinitiliser");
+		this.btnSauvegarder   = new JButton("Sauvegarder" );
+		this.btnVerifier      = new JButton("Vérifier"    );
+
+		JPanel panelBot = new JPanel(new GridLayout(0, 3, 2, 0));
+
+		panelBot.add(this.btnReinitialiser);
+		panelBot.add(this.btnSauvegarder  );
+		panelBot.add(this.btnVerifier     );
+
+		this.add(panelBot, BorderLayout.SOUTH);
+
+		this.btnReinitialiser.addActionListener(this);
+		this.btnSauvegarder  .addActionListener(this);
+		this.btnVerifier     .addActionListener(this);
 
 		this.addMouseListener      (gs);
 		this.addMouseMotionListener(gs);
@@ -88,6 +114,24 @@ public class PanelGrille extends JPanel
 		tabRet[1] = this.ligCaseSelect;
 
 		return tabRet;
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		if (e.getSource() == this.btnReinitialiser)
+		{
+			this.ctrl.reinitialiser();
+		}
+
+		if (e.getSource() == this.btnSauvegarder)
+		{
+			return;
+		}
+
+		if (e.getSource() == this.btnVerifier)
+		{
+			System.out.println(this.ctrl.verifier());
+		}
 	}
 
 	public class GereSouris extends MouseAdapter

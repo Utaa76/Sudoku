@@ -72,8 +72,9 @@ public class PanelNumeros extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e)
 	{
+		if (this.numSelect == null) return;
+
 		this.ctrl.ecrireNumero(this.numSelect);
-		this.numSelect = null;
 	}
 	
 	public class GereSouris extends MouseAdapter

@@ -18,6 +18,8 @@ public class FrameJeu extends JFrame
 	{
 		this.ctrl = ctrl;
 
+		this.setLayout(new BorderLayout(5, 0));
+
 		this.setTitle("Sudoku");
 		this.setSize(850, 600);
 		this.setLocationRelativeTo(null);

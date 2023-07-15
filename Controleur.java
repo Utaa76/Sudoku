@@ -28,11 +28,23 @@ public class Controleur
 		this.vue.maj();
 	}
 
+	public void reinitialiser()
+	{
+		this.metier.genererGrille(1);
+		this.vue.maj();
+	}
+
+	public boolean verifier()
+	{
+		return this.metier.estValide();
+	}
+
 	public static void main(String[] a)
 	{
 		new Controleur();
 	}
 }
 
-// Garder les index de la case selectionnée
-// Dessiner un rectangle gris à cet endroit
+// Mettre les numéros écrits en bleu
+// Pouvoir modifier les numéros écrits
+// Mettre en place un ctrl z
